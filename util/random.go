@@ -30,15 +30,15 @@ func randomString(n int) string {
 	return sb.String()
 }
 
-func randomOwner() string {
+func RandomOwner() string {
 	return randomString(6)
 }
 
-func randomMoney() int64 {
+func RandomMoney() int64 {
 	return randomInt(0, 1000000)
 }
 
-func randomCurrency() string {
+func RandomCurrency() string {
 	currencys := []string{"USD", "GBP", "RMB"}
 	l := len(currencys)
 	c := currencys[rand.Intn(l)]
