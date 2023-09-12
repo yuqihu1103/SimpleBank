@@ -38,6 +38,10 @@ func RandomMoney() int64 {
 	return randomInt(0, 1000000)
 }
 
+func RandomMoneyPN() int64 {
+	return randomInt(-1000000, 1000000)
+}
+
 func RandomCurrency() string {
 	currencys := []string{"USD", "GBP", "RMB"}
 	l := len(currencys)
