@@ -9,7 +9,6 @@ sql:
       out: "./db/sqlc"
       emit_json_tags: true
       emit_empty_slices: true
-      emit_interface: true
 
   database:
     uri: "postgresql://root:password@localhost:5432/simple_bank?sslmode=disable"
