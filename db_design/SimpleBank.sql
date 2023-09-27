@@ -1,3 +1,12 @@
+CREATE TABLE "users" (
+  "username" varchar PRIMARY KEY
+  "hashed_password" varchar NOT NULL
+  "full_name" varchar NOT NULL
+  "email" varchar UNIQUE NOT NULL
+  "password_changed_at" timestamptz NOT NULL DEFAULT '0001-01-01 00:00:00Z'
+  "created_at" timestamptz DEFAULT (now())
+)
+
 --records all bank accounts
 CREATE TABLE "accounts" (
   "id" bigserial PRIMARY KEY, --unique account ID, auto incremental primary key
@@ -28,6 +37,8 @@ CREATE TABLE "transfers" (
 --may want to search for accounts by owner name
 CREATE INDEX ON "accounts" ("owner");
 
+CREATE UNIQUE INDEX ON "accounts" ("owner", "currency");
+
 --may want to list all entries of a specific accoount
 CREATE INDEX ON "entries" ("account_id");
 
@@ -41,6 +52,8 @@ COMMENT ON COLUMN "entries"."amount" IS 'can be positive or negative';
 
 --amount of a transfer can only be positive to make sense
 COMMENT ON COLUMN "transfers"."amount" IS 'must be postive';
+
+ALTER TABLE "accounts" ADD FOREIGN KEY ("owner") REFERENCES "users" ("username");
 
 --ref to account where change is made (one to many from accounts to entries)
 ALTER TABLE "entries" ADD FOREIGN KEY ("account_id") REFERENCES "accounts" ("id");
