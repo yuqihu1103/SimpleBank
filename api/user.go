@@ -23,18 +23,23 @@ func (server *Server) createUser(ctx *gin.Context) {
 		return
 	}
 
+	hashedPassword, err := util.HashedPassword(req.Password)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+	}
+
 	arg := db.CreateUserParams{
 		Username:       req.Username,
-		HashedPassword: util.HashedPassword(req.Password),
+		HashedPassword: hashedPassword,
 		FullName:       req.FullName,
 		Email:          req.Email,
 	}
 
-	account, err := server.store.CreateUser(ctx, arg)
+	user, err := server.store.CreateUser(ctx, arg)
 	if err != nil {
 		if pqErr, ok := err.(*pq.Error); ok {
 			switch pqErr.Code.Name() {
-			case "foreign_key_violation", "unique_violation":
+			case "unique_violation":
 				ctx.JSON(http.StatusForbidden, errorResponse(err))
 			}
 		}
@@ -42,5 +47,5 @@ func (server *Server) createUser(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, account)
+	ctx.JSON(http.StatusOK, user)
 }
