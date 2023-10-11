@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"io"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -13,6 +13,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/mock/gomock"
+	"github.com/lib/pq"
 	"github.com/stretchr/testify/require"
 	mockdb "github.com/yuqihu1103/SimpleBank/db/mock"
 	db "github.com/yuqihu1103/SimpleBank/db/sqlc"
@@ -107,15 +108,10 @@ func TestCreateUserAPI(t *testing.T) {
 				"email":     user.Email,
 			},
 			buildStubs: func(store *mockdb.MockStore) {
-				arg := db.CreateUserParams{
-					Username: user.Username,
-					FullName: user.FullName,
-					Email:    user.Email,
-				}
 				store.EXPECT().
-					CreateUser(gomock.Any(), EqCreateUserParams(arg, password)).
+					CreateUser(gomock.Any(), gomock.Any()).
 					Times(1).
-					Return(db.User{}, db.ErrUniqueViolation)
+					Return(db.User{}, &pq.Error{Code: "23505"})
 			},
 			checkResponse: func(recorder *httptest.ResponseRecorder) {
 				require.Equal(t, http.StatusForbidden, recorder.Code)
@@ -202,7 +198,7 @@ func TestCreateUserAPI(t *testing.T) {
 }
 
 func randomUser(t *testing.T) (user db.User, password string) {
-	password = util.RandomOwner()
+	password = util.RandomString(6)
 	hashedPassword, err := util.HashedPassword(password)
 	require.NoError(t, err)
 
@@ -216,7 +212,7 @@ func randomUser(t *testing.T) (user db.User, password string) {
 }
 
 func requireBodyMatchUser(t *testing.T, body *bytes.Buffer, user db.User) {
-	data, err := io.ReadAll(body)
+	data, err := ioutil.ReadAll(body)
 	require.NoError(t, err)
 
 	var gotUser db.User
