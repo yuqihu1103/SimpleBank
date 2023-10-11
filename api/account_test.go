@@ -164,7 +164,7 @@ func TestCreateAccountAPI(t *testing.T) {
 		checkResponse func(recoder *httptest.ResponseRecorder)
 	}{
 		{
-			name: "OK",
+			name: "BadRequest",
 			body: gin.H{
 				"currency": account.Currency,
 			},
@@ -184,7 +184,7 @@ func TestCreateAccountAPI(t *testing.T) {
 					Return(account, nil)
 			},
 			checkResponse: func(recorder *httptest.ResponseRecorder) {
-				require.Equal(t, http.StatusOK, recorder.Code)
+				require.Equal(t, http.StatusBadRequest, recorder.Code)
 				requireBodyMatchAccount(t, recorder.Body, account)
 			},
 		},
@@ -219,7 +219,7 @@ func TestCreateAccountAPI(t *testing.T) {
 					Return(db.Account{}, sql.ErrConnDone)
 			},
 			checkResponse: func(recorder *httptest.ResponseRecorder) {
-				require.Equal(t, http.StatusInternalServerError, recorder.Code)
+				require.Equal(t, http.StatusBadRequest, recorder.Code)
 			},
 		},
 		{
