@@ -14,7 +14,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: "a6319d55a49724c549705f0f35c2fd54-1892477429.us-west-1.elb.amazonaws.com"
+    - host: "a6319d55a49724c549705f0f35c2fd54-93267204.us-west-1.elb.amazonaws.com"
       http:
         paths:
           - pathType: Prefix
@@ -26,5 +26,5 @@ spec:
                   number: 80
   tls:
     - hosts:
-        - a6319d55a49724c549705f0f35c2fd54-1892477429.us-west-1.elb.amazonaws.com
+        - a6319d55a49724c549705f0f35c2fd54-93267204.us-west-1.elb.amazonaws.com
       secretName: simple-bank-api-cert
