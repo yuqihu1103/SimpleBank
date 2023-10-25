@@ -1,10 +1,17 @@
 # Simple Bank
+**Author:** [Yuqi Hu](https://yuqihu1103.github.io/)
 
-Simple overview of use/purpose.
+**Project Description:**
 
-## Description
+The Simple Bank is a backend web service, which provide APIs to:
 
-An in-depth paragraph about your project and overview of use.
+1. Create and manage bank accounts, which are composed of owner’s name, balance, and currency.
+   
+2. Record all balance changes to each of the account. So that an account entry record will be created every time some money is added to or subtracted from the account.
+   
+3. Perform a money transfer between two accounts. This happens within a transaction: either both accounts’ balance are updated successfully or none of them are.
+
+## Demo
 
 ## Getting Started
 
@@ -26,37 +33,10 @@ An in-depth paragraph about your project and overview of use.
 code blocks for commands
 ```
 
-## Help
-
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
-
-## Authors
-
-Contributors names and contact info
-
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
-
-## Version History
-
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
-
 ## License
 
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
+This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgments
 
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+The development of this project was inspired the [Backend Master Class](https://www.udemy.com/course/backend-master-class-golang-postgresql-kubernetes/) on Udemy.
